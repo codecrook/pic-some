@@ -4,7 +4,8 @@ import { Context } from '../Context';
 
 function Image({ className, img }) {
     const [hovered, setHovered] = useState(false);
-    const { toggleFavorite } = useContext(Context);
+    const { toggleFavorite, addToCart, cartItems } = useContext(Context);
+    const isAlreadyInCart = cartItems.some(i => i.id === img.id);
 
     function HeartIcon({ hovered, isFavorite }) {
         return (
@@ -18,8 +19,18 @@ function Image({ className, img }) {
         );
     }
 
-    const cartIcon = hovered && <i className="ri-add-circle-line cart"></i>;
+    function CartIcon({ isAlreadyInCart }) {
+        return (
+            <>
+                {
 
+                    isAlreadyInCart ? <i className="ri-shopping-cart-fill cart"></i> :
+                        hovered ? <i className="ri-add-circle-line cart" onClick={() => addToCart(img)}></i> :
+                            null
+                }
+            </>
+        );
+    }
 
     return (
         <div
@@ -30,7 +41,7 @@ function Image({ className, img }) {
             <img src={img.url} className="image-grid" alt="display images" />
 
             <HeartIcon hovered={hovered} isFavorite={img.isFavorite} />
-            {cartIcon}
+            <CartIcon isAlreadyInCart={isAlreadyInCart} />
         </div>
     );
 }
