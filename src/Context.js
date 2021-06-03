@@ -21,10 +21,11 @@ function ContextProvider({ children }) {
     function addToCart(newImage) { setCartItems(prevCartItems => [...prevCartItems, newImage]); }
 
     function removeFromCart(id) { setCartItems(prevCartItems => prevCartItems.filter(i => i.id !== id)); }
+    function emptyCart() { setCartItems([]); }
 
 
     return (
-        <Context.Provider value={{ allPhotos, toggleFavorite, cartItems, addToCart, removeFromCart }}>
+        <Context.Provider value={{ allPhotos, toggleFavorite, cartItems, addToCart, removeFromCart, emptyCart }}>
             {children}
         </Context.Provider>
     );
